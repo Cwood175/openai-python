@@ -58,29 +58,79 @@ from ....types.responses import (
     ResponseCodeInterpreterCallCompletedEvent,
     ResponseCodeInterpreterCallInProgressEvent,
     ResponseCodeInterpreterCallInterpretingEvent,
+    ResponseReasoningSummaryPartAddedEvent as RawResponseReasoningSummaryPartAddedEvent,
+    ResponseReasoningSummaryPartDoneEvent as RawResponseReasoningSummaryPartDoneEvent,
+    ResponseReasoningSummaryTextDeltaEvent as RawResponseReasoningSummaryTextDeltaEvent,
+    ResponseReasoningSummaryTextDoneEvent as RawResponseReasoningSummaryTextDoneEvent,
+    ResponseImageGenCallGeneratingEvent as RawResponseImageGenCallGeneratingEvent,
+    ResponseImageGenCallInProgressEvent as RawResponseImageGenCallInProgressEvent,
+    ResponseImageGenCallPartialImageEvent as RawResponseImageGenCallPartialImageEvent,
+    ResponseImageGenCallCompletedEvent as RawResponseImageGenCallCompletedEvent,
+    ResponseMcpCallArgumentsDeltaEvent as RawResponseMcpCallArgumentsDeltaEvent,
+    ResponseMcpCallArgumentsDoneEvent as RawResponseMcpCallArgumentsDoneEvent,
+    ResponseMcpCallFailedEvent as RawResponseMcpCallFailedEvent,
+    ResponseMcpCallInProgressEvent as RawResponseMcpCallInProgressEvent,
+    ResponseMcpCallCompletedEvent as RawResponseMcpCallCompletedEvent,
+    ResponseMcpListToolsFailedEvent as RawResponseMcpListToolsFailedEvent,
+    ResponseMcpListToolsInProgressEvent as RawResponseMcpListToolsInProgressEvent,
+    ResponseMcpListToolsCompletedEvent as RawResponseMcpListToolsCompletedEvent,
+    ResponseWebSearchCallSearchingEvent as RawResponseWebSearchCallSearchingEvent,
+    ResponseWebSearchCallInProgressEvent as RawResponseWebSearchCallInProgressEvent,
+    ResponseWebSearchCallCompletedEvent as RawResponseWebSearchCallCompletedEvent,
+    ResponseFileSearchCallSearchingEvent as RawResponseFileSearchCallSearchingEvent,
+    ResponseFileSearchCallInProgressEvent as RawResponseFileSearchCallInProgressEvent,
+    ResponseFileSearchCallCompletedEvent as RawResponseFileSearchCallCompletedEvent,
+    ResponseCodeInterpreterCallCodeDeltaEvent as RawResponseCodeInterpreterCallCodeDeltaEvent,
+    ResponseCodeInterpreterCallCodeDoneEvent as RawResponseCodeInterpreterCallCodeDoneEvent,
+    ResponseCodeInterpreterCallInterpretingEvent as RawResponseCodeInterpreterCallInterpretingEvent,
+    ResponseCodeInterpreterCallInProgressEvent as RawResponseCodeInterpreterCallInProgressEvent,
+    ResponseCodeInterpreterCallCompletedEvent as RawResponseCodeInterpreterCallCompletedEvent,
+    ResponseAudioTranscriptDeltaEvent as RawResponseAudioTranscriptDeltaEvent,
+    ResponseAudioTranscriptDoneEvent as RawResponseAudioTranscriptDoneEvent,
+    ResponseAudioDeltaEvent as RawResponseAudioDeltaEvent,
+    ResponseAudioDoneEvent as RawResponseAudioDoneEvent,
+    ResponseRefusalDeltaEvent as RawResponseRefusalDeltaEvent,
+    ResponseRefusalDoneEvent as RawResponseRefusalDoneEvent,
+    ResponseTextDeltaEvent as RawResponseTextDeltaEvent,
+    ResponseTextDoneEvent as RawResponseTextDoneEvent,
+    ResponseOutputItemAddedEvent as RawResponseOutputItemAddedEvent,
+    ResponseOutputItemDoneEvent as RawResponseOutputItemDoneEvent,
+    ResponseContentPartAddedEvent as RawResponseContentPartAddedEvent,
+    ResponseContentPartDoneEvent as RawResponseContentPartDoneEvent,
+    ResponseCompletedEvent as RawResponseCompletedEvent,
+    ResponseInProgressEvent as RawResponseInProgressEvent,
+    ResponseFailedEvent as RawResponseFailedEvent,
+    ResponseIncompleteEvent as RawResponseIncompleteEvent,
+    ResponseQueuedEvent as RawResponseQueuedEvent,
+    ResponseCreatedEvent as RawResponseCreatedEvent,
+    ResponseErrorEvent as RawResponseErrorEvent,
+    ResponseOutputTextAnnotationAddedEvent as RawResponseOutputTextAnnotationAddedEvent,
+    ResponseFunctionCallArgumentsDeltaEvent as RawResponseFunctionCallArgumentsDeltaEvent,
+    ResponseFunctionCallArgumentsDoneEvent as RawResponseFunctionCallArgumentsDoneEvent,
 )
 
 TextFormatT = TypeVar(
     "TextFormatT",
     # if it isn't given then we don't do any parsing
     default=None,
+    bound=str,
 )
 
 
 class ResponseTextDeltaEvent(RawResponseTextDeltaEvent):
-    snapshot: str
+    snapshot: str = ""
 
 
 class ResponseTextDoneEvent(RawResponseTextDoneEvent, GenericModel, Generic[TextFormatT]):
-    parsed: Optional[TextFormatT] = None
+    parsed: Optional[TextFormatT] = None  # type: ignore[assignment]
 
 
 class ResponseFunctionCallArgumentsDeltaEvent(RawResponseFunctionCallArgumentsDeltaEvent):
-    snapshot: str
+    snapshot: str = ""
 
 
 class ResponseCompletedEvent(RawResponseCompletedEvent, GenericModel, Generic[TextFormatT]):
-    response: ParsedResponse[TextFormatT]  # type: ignore[assignment]
+    response: ParsedResponse[TextFormatT]
 
 
 ResponseStreamEvent: TypeAlias = Annotated[
