@@ -17,7 +17,7 @@ from ...._types import NOT_GIVEN, NotGiven
 from ...._utils import is_given, consume_sync_iterator, consume_async_iterator
 from ...._models import build, construct_type_unchecked
 from ...._streaming import Stream, AsyncStream
-from ....types.responses import ParsedResponse, ResponseStreamEvent as RawResponseStreamEvent
+from ....types.responses import ParsedResponse, ResponseReasoningSummaryDoneEvent, ResponseStreamEvent as RawResponseStreamEvent
 from ..._parsing._responses import TextFormatT, parse_text, parse_response
 from ....types.responses.tool_param import ToolParam
 from ....types.responses.parsed_response import (

@@ -54,6 +54,7 @@ from .response_input_content import ResponseInputContent as ResponseInputContent
 from .response_output_message import ResponseOutputMessage as ResponseOutputMessage
 from .response_output_refusal import ResponseOutputRefusal as ResponseOutputRefusal
 from .response_reasoning_item import ResponseReasoningItem as ResponseReasoningItem
+from .response_reasoning_summary_done_event import ResponseReasoningSummaryDoneEvent as ResponseReasoningSummaryDoneEvent
 from .tool_choice_types_param import ToolChoiceTypesParam as ToolChoiceTypesParam
 from .easy_input_message_param import EasyInputMessageParam as EasyInputMessageParam
 from .response_completed_event import ResponseCompletedEvent as ResponseCompletedEvent
