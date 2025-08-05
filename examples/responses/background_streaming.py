@@ -17,15 +17,15 @@ class MathResponse(BaseModel):
     final_answer: str
 
 
-client = OpenAI()
-id = None
+client: OpenAI = OpenAI()
+id: str | None = None
 with client.responses.stream(
     input="solve 8x + 31 = 2",
     model="gpt-4o-2024-08-06",
     text_format=MathResponse,
     background=True,
 ) as stream:
-    for event in stream:
+    for event in stream:  # type: ignore[reportUnknownVariableType]
         if event.type == "response.created":
             id = event.response.id
         if "output_text" in event.type:
