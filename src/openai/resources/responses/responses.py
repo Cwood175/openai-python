@@ -2916,7 +2916,7 @@ def _make_tools(tools: Iterable[ParseableToolParam] | NotGiven) -> List[ToolPara
     if not is_given(tools):
         return NOT_GIVEN
 
-    converted_tools: List[ToolParam] = []
+    converted_tools: List[ChatCompletionCustomToolParam] = []
     for tool in tools:
         if tool["type"] != "function":
             converted_tools.append(tool)
