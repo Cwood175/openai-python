@@ -318,7 +318,7 @@ class ResponseStreamState(Generic[TextFormatT]):
                 )
             )
         else:
-            events.append(event)
+            pass
 
         return events
 
