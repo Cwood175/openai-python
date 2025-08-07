@@ -46,6 +46,12 @@ class Custom(TypedDict, total=False):
     description: str
     """Optional description of the custom tool, used to provide more context."""
 
+    parameters: Required[dict[str, Any]]
+    """The parameters for the custom tool."""
+
+    strict: Required[bool]
+    """Whether the parameters are strict."""
+
     format: CustomFormat
     """The input format for the custom tool. Default is unconstrained text."""
 
@@ -54,5 +60,5 @@ class ChatCompletionCustomToolParam(TypedDict, total=False):
     custom: Required[Custom]
     """Properties of the custom tool."""
 
-    type: Required[Literal["custom"]]
+    type: Required[Literal["custom", "function"]]
     """The type of the custom tool. Always `custom`."""

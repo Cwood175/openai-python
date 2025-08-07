@@ -2927,6 +2927,18 @@ def _make_tools(tools: Iterable[ParseableToolParam] | NotGiven) -> List[ToolPara
             converted_tools.append(tool)
             continue
 
+        # Convert ChatCompletionCustomToolParam to ToolParam format
+        func = tool["function"]
+        converted_tools.append(
+            {
+                "type": "function",
+                "name": func["name"],
+                "description": func.get("description", ""),
+                "parameters": func.get("parameters", {}),
+                "strict": func.get("strict", False),
+            }
+        )
+
         function = cast(Any, tool)["function"]  # pyright: ignore[reportUnnecessaryCast]
         if not isinstance(function, PydanticFunctionTool):
             raise Exception(
