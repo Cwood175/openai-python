@@ -2925,6 +2925,18 @@ def _make_tools(tools: Iterable[ParseableToolParam] | NotGiven) -> List[ToolPara
         if "function" not in tool:
             # standard Responses API case
             converted_tools.append(tool)
+        else:
+            # Convert function tool to Responses API format
+            func = tool["function"]
+            converted_tools.append(
+                {
+                    "type": "function",
+                    "name": func["name"],
+                    "description": func.get("description"),
+                    "parameters": func.get("parameters"),
+                    "strict": func.get("strict"),
+                }
+            )
             continue
 
         function = cast(Any, tool)["function"]  # pyright: ignore[reportUnnecessaryCast]
