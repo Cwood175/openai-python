@@ -33,7 +33,13 @@ def assert_signatures_in_sync(
             errors.append(f"the `{name}` param is missing")
             continue
 
-        if custom_param.annotation != source_param.annotation:
+        annotations_match = custom_param.annotation == source_param.annotation
+        if isinstance(custom_param.annotation, str) and isinstance(source_param.annotation, str):
+            annotations_match = annotations_match or custom_param.annotation == source_param.annotation.replace(
+                "SequenceNotStr", "List"
+            )
+
+        if not annotations_match:
             errors.append(
                 f"types for the `{name}` param are do not match; source={repr(source_param.annotation)} checking={repr(custom_param.annotation)}"
             )
