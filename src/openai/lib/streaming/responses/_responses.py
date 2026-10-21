@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import inspect
 from types import TracebackType
-from typing import Any, List, Generic, Iterable, Awaitable, cast
-from typing_extensions import Self, Callable, Iterator, AsyncIterator
+from typing import Any, List, Generic, Iterable, Awaitable, cast, Union
+from typing import Self, Callable, Iterator, AsyncIterator
 
 from ._types import ParsedResponseSnapshot
 from ._events import (
-    ResponseStreamEvent,
+    ResponseStreamEvent as LocalResponseStreamEvent,
     ResponseTextDoneEvent,
     ResponseCompletedEvent,
     ResponseTextDeltaEvent,
@@ -244,10 +244,10 @@ class ResponseStreamState(Generic[TextFormatT]):
         self._text_format = text_format
         self._rich_text_format: type | NotGiven = text_format if inspect.isclass(text_format) else NOT_GIVEN
 
-    def handle_event(self, event: RawResponseStreamEvent) -> List[ResponseStreamEvent[TextFormatT]]:
+    def handle_event(self, event: RawResponseStreamEvent) -> List[Union[LocalResponseStreamEvent[TextFormatT], RawResponseStreamEvent]]:
         self.__current_snapshot = snapshot = self.accumulate_event(event)
 
-        events: List[ResponseStreamEvent[TextFormatT]] = []
+        events: List[Union[LocalResponseStreamEvent[TextFormatT], RawResponseStreamEvent]] = []
 
         if event.type == "response.output_text.delta":
             output = snapshot.output[event.output_index]

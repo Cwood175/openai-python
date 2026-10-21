@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, List, Type, Union, Iterable, Optional, cast
+from typing import Any, List, Type, Union, Iterable, Optional, cast, TYPE_CHECKING
 from functools import partial
 from typing_extensions import Literal, overload
 
@@ -37,7 +37,8 @@ from ...types.responses.tool_param import ToolParam, ParseableToolParam
 from ...types.shared_params.metadata import Metadata
 from ...types.shared_params.reasoning import Reasoning
 from ...types.responses.parsed_response import ParsedResponse
-from ...lib.streaming.responses._responses import ResponseStreamManager, AsyncResponseStreamManager
+if TYPE_CHECKING:
+    from ...lib.streaming.responses._responses import ResponseStreamManager, AsyncResponseStreamManager
 from ...types.responses.response_includable import ResponseIncludable
 from ...types.shared_params.responses_model import ResponsesModel
 from ...types.responses.response_input_param import ResponseInputParam
@@ -815,7 +816,7 @@ class Responses(SyncAPIResource):
             ),
             cast_to=Response,
             stream=stream or False,
-            stream_cls=Stream[ResponseStreamEvent],
+            stream_cls=Stream,
         )
 
     @overload
@@ -2130,7 +2131,7 @@ class AsyncResponses(AsyncAPIResource):
             ),
             cast_to=Response,
             stream=stream or False,
-            stream_cls=AsyncStream[ResponseStreamEvent],
+            stream_cls=AsyncStream,
         )
 
     @overload
@@ -2608,7 +2609,7 @@ class AsyncResponses(AsyncAPIResource):
             ),
             cast_to=Response,
             stream=stream or False,
-            stream_cls=AsyncStream[ResponseStreamEvent],
+            stream_cls=AsyncStream,
         )
 
     async def delete(
