@@ -18,15 +18,20 @@ class MathResponse(BaseModel):
 
 
 async def main() -> None:
+    from typing import cast
+    from collections.abc import AsyncIterator
+
+    from openai.types.responses.response_stream_event import ResponseStreamEvent
+
     client = AsyncOpenAI()
-    id = None
+    id: str | None = None
     async with client.responses.stream(
         input="solve 8x + 31 = 2",
         model="gpt-4o-2024-08-06",
         text_format=MathResponse,
         background=True,
     ) as stream:
-        async for event in stream:
+        async for event in cast(AsyncIterator[ResponseStreamEvent], stream):
             if event.type == "response.created":
                 id = event.response.id
             if "output_text" in event.type:
@@ -42,7 +47,7 @@ async def main() -> None:
         starting_after=10,
         text_format=MathResponse,
     ) as stream:
-        async for event in stream:
+        async for event in cast(AsyncIterator[ResponseStreamEvent], stream):
             if "output_text" in event.type:
                 rich.print(event)
 
